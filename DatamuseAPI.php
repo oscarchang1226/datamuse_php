@@ -11,6 +11,21 @@
  * @author Moses Simeonidis
  */
 class DatamuseAPI {
+
+	const POPULAR_NOUNS_CODE = 'jja'; // Popular nouns modified by the given adjective, per Google Books Ngrams
+	const POPULAR_ADJECTIVES_CODE = 'jjb';//Popular adjectives used to modify the given noun, per Google Books Ngrams
+	const POPULAR_SYNONYMS_CODE = 'syn';//Synonyms (words contained within the same WordNet synset)
+	const POPULAR_ANTONYMS_CODE = 'ant';//Antonyms (per WordNet)
+	const POPULAR_KIND_OF_CODE = 'spc';//"Kind of" (direct hypernyms, per WordNet)
+	const POPULAR_MORE_GENERAL_THAN_CODE = 'gen';//"More general than" (direct hyponyms, per WordNet)
+	const POPULAR_COMPRISES_CODE = 'com';//"Comprises" (direct holonyms, per WordNet)
+	const POPULAR_PART_OF_CODE = 'par';//"Part of" (direct meronyms, per WordNet)
+	const POPULAR_FREQUENT_FOLLOWERS_CODE = 'bga';//Frequent followers (w′ such that P(w′|w) ≥ 0.001, per Google Books Ngrams)
+	const POPULAR_FREQUENT_PREDECESSORS_CODE = 'bgb';//Frequent predecessors (w′ such that P(w|w′) ≥ 0.001, per Google Books Ngrams)
+	const POPULAR_RHYMES_CODE = 'rhy';//Rhymes ("perfect" rhymes, per RhymeZone)
+	const POPULAR_APPROXIMATE_RHYMES_CODE = 'nry';//Approximate rhymes (per RhymeZone)
+	const POPULAR_HOMOPHONES_CODE = 'hom';//Homophones (sound-alike words)
+	const POPULAR_CONSONANT_MATCH_CODE = 'cns';//Consonant match
     
     /**
      * The basic call for the datamuse api. The basic url call is 'https://api.datamuse.com/words'.
@@ -41,6 +56,27 @@ class DatamuseAPI {
         return json_decode( $result, true );
     }
     
+	/**
+     * 'Related word constraints' as described at the api page www.datamuse.com/api/
+     * 
+     * @param type $word The input word or phrase.
+     * @param String $code three-letter identifier as described at www.datamuse.com/api/
+     * @param Integer $limit the limit number of the results.
+     * @param array $options Add more options if is necessary.
+     * @return array
+     */   
+    public static function related_word( $word, $code, $limit = 0, $options = array( )  ){
+    	
+    	if( $limit != 0 ){
+            $options['max'] = $limit;
+        }
+
+    	$options[ 'rel_'.$code ] = $word;
+
+    	return self::callbase( $options );
+
+    }
+
     /**
      * 'Means like constraint' as described at the api page www.datamuse.com/api/
      * 
