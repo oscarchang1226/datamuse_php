@@ -1,0 +1,14 @@
+{
+    "name": "oscarchang1226/datamuse",
+    "description": "PHP SDK for Datamuse API",
+    "keywords": ["datamuse", "nlp", "doug", "beeferman"]
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ]
+    }
+}
